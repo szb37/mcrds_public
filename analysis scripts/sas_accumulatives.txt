@@ -1,0 +1,17 @@
+proc mixed data=<DATASET> ;
+
+  class treatment trial_id visit <FACTORS>;
+
+  model chgbaseline=treatment visit treatment*visit baseline <FACTORS and COVARIATES > /s alpha=0.05;
+
+  repeated visit/type = cs subject=trial_id;
+
+  lsmeans treatment*visit /cl om;
+
+run;
+
+DATASET: the input dataset
+
+FACTORS: List of factors kept in the model
+
+COVARIATES: List of covariates kept in the model
